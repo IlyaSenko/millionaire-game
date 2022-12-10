@@ -8,7 +8,7 @@ export default function Start(): JSX.Element {
         <img className={s.hand} src="/hand.png" alt="hand" />
         <div className={s.text}>
           <h1 className={s.heading}>Who wants to be a millionaire?</h1>
-          <Button>Start</Button>
+          <Button className={s.button}>Start</Button>
         </div>
       </div>
       <img className={s.bg} src="/start-bg.png" alt="BG" />

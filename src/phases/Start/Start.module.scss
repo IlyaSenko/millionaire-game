@@ -1,6 +1,15 @@
+@import 'styles/mixins.scss';
+
 .wrapper {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;   
+  
+  @include devices(mobile) {
+    align-items: flex-start;
+  } 
 }
 
 .bg {
@@ -12,16 +21,41 @@
   object-fit: fill;
 }
 
+.hand {
+  @media(max-width: 1360px) {
+    margin-bottom: 24px;
+  }
+  
+  @include devices(mobile) {
+    width: 288px;
+    object-fit: contain;
+  }
+}
+
 .content {
   display: flex;
-  position: relative;
-  top: 23%;
-  left: 80px;
+  align-items: center;
   z-index: 1;
+  overflow: hidden;
+  transform: translateY(-10%);
+
+  @media(max-width: 1360px) {
+    flex-direction: column;
+    transform: none;
+  }
+  
+  @include devices(mobile) {
+    padding-top: 120px;  
+  } 
 }
 
 .text {
-  margin-left: 23px;
+  margin-left: 23px;  
+  
+  @media(max-width: 1360px) {
+    text-align: center;
+    margin-left: 0;
+  }
 }
 
 .heading {
@@ -30,4 +64,19 @@
   font-size: 56px;
   line-height: 60px;
   margin: 0 0 64px;
+  
+  @include devices(mobile) {
+    width: 288px;
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
+
+.button {
+  @include devices(mobile) {
+    position: absolute;
+    bottom: 48px;
+    left: 16px;
+    width: calc(100vw - 32px);
+  }
 }

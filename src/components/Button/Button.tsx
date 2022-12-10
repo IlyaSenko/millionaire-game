@@ -1,9 +1,16 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 import s from './Button.module.scss';
 
-export default function Button({ children }: { children?: ReactNode }): JSX.Element {
+export default function Button({
+  children,
+  className
+}: {
+  className?: string;
+  children?: ReactNode;
+}): JSX.Element {
   return (
-    <button className={s.button} type="button">
+    <button className={clsx(s.button, className)} type="button">
       {children}
     </button>
   );
