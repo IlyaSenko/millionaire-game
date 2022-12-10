@@ -1,0 +1,25 @@
+.button {
+  height: 64px;
+  width: 296px;
+  background: var(--orange);
+  border: 2px solid transparent;
+  padding: 0;
+  margin: 0;
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover, &:active, &:focus {
+    border: 2px solid var(--orange);
+    background: transparent;
+    color: var(--orange);
+  }
+
+  &:active, &:focus {
+    box-shadow: inset 0 0 10px var(--orange);
+  }
+}
