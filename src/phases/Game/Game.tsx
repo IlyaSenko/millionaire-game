@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Hamburger from 'components/Hamburger';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import Media from 'react-media';
 import { formatPrize } from 'utils/formarPrize';
 import questions from 'questions.json';
@@ -25,19 +25,24 @@ function getStatusById(iteratedQuestionId: number, currentQuestionId: number): T
 function Option({
   value,
   label,
+  isCorrect,
   onClick
 }: {
   value: string;
   label: string;
+  isCorrect: boolean;
   onClick: () => void;
 }): JSX.Element {
   return (
     <div className={s.optionWrapper} onClick={onClick}>
       <div className={s.optionConnector} />
-      <div className={s.option}>
+      <button
+        className={clsx(s.option, {
+          [s.isCorrect]: isCorrect
+        })}>
         <h4>{value}</h4>
         <span>{label}</span>
-      </div>
+      </button>
       <div className={s.optionConnector} />
     </div>
   );
@@ -73,17 +78,16 @@ export default function Game({
   }, [currentQuestionId]);
 
   const handleSelectAnswer = useCallback(
-    (value: string) => {
-      const correctAnswer = currentQuestion?.answers.find(({ isCorrect }) => isCorrect)?.value;
-      const isEnteredValueCorrect = correctAnswer === value;
-
-      if (isEnteredValueCorrect) {
-        onCorrectAnswer();
-      } else {
-        onWrongAnswer();
-      }
+    (isCorrect: boolean) => {
+      setTimeout(() => {
+        if (isCorrect) {
+          onCorrectAnswer();
+        } else {
+          onWrongAnswer();
+        }
+      }, 1500);
     },
-    [currentQuestion]
+    [onCorrectAnswer, onWrongAnswer]
   );
 
   return (
@@ -97,12 +101,13 @@ export default function Game({
       <div className={s.board}>
         <h3 className={s.question}>{currentQuestion?.question}</h3>
         <div className={s.options}>
-          {currentQuestion?.answers.map(({ value, label }) => (
+          {currentQuestion?.answers.map(({ value, label, isCorrect }) => (
             <Option
-              key={value}
+              key={label}
               value={value}
               label={label}
-              onClick={() => handleSelectAnswer(value)}
+              isCorrect={isCorrect}
+              onClick={() => handleSelectAnswer(isCorrect)}
             />
           ))}
         </div>

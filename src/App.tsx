@@ -18,6 +18,7 @@ function App(): JSX.Element | null {
       setCurrentQuestionId(currentQuestionId + 1);
       return;
     }
+    setCurrentQuestionId(currentQuestionId + 1);
     setPhase('end');
   }, [currentQuestionId]);
 

@@ -10,7 +10,7 @@ export default function End({
   questionId: number;
   onSubmit: () => void;
 }): JSX.Element {
-  const prize = questions.find(({ id }: { id: number }) => id === questionId)?.prize || 0;
+  const prize = questions.find(({ id }: { id: number }) => id === questionId - 1)?.prize || 0;
 
   return (
     <div className={s.wrapper}>

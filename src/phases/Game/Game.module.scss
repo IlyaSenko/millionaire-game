@@ -66,13 +66,21 @@
   line-height: 20px;
   cursor: pointer;
   transition: all 0.3s;
+  border: none;
+  background-color: unset;
 
   &:hover {
     filter: brightness(0.8);
   }
 
-  &:active {
-    filter: brightness(0.6);
+  &:active, &:focus {
+    filter: invert(44%) sepia(84%) saturate(5274%) hue-rotate(342deg) brightness(90%) contrast(117%);
+    transition: none;
+    outline: none;
+  }
+
+  &:active.isCorrect, &:focus.isCorrect {
+    filter: invert(56%) sepia(31%) saturate(3235%) hue-rotate(74deg) brightness(121%) contrast(121%);
   }
 
   @media(max-width: 1300px) {
