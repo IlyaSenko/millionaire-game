@@ -1,6 +1,11 @@
+@import 'styles/mixins.scss';
+
 .wrapper {
+  position: relative;
   display: flex;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .board {
@@ -8,8 +13,13 @@
   flex-direction: column;
   justify-content: space-between;
   width: 76vw;
-  background: #F5F5F7;
+  background: var(--bg-game);
   padding: 133px 80px 122px;
+  
+  @include devices(mobile) {
+    width: 100vw;
+    padding: 136px 0px 24px;
+  }
 }
 
 .question {
@@ -18,12 +28,25 @@
   width: 624px;
   margin: 0;
   color: var(--black);
+  
+  @include devices(mobile) {
+    font-size: 18px;
+    line-height: 18px;
+    width: calc(100% - 16px);
+    text-align: center;
+  }
 }
 
 .options {
   display: flex;
   flex-wrap: wrap;
   gap: 32px 0;
+  
+  @include devices(mobile) {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px 0;
+  }
 }
 
 .optionWrapper {
@@ -55,6 +78,15 @@
   @media(max-width: 1300px) {
     width: 26vw;
     background-size: 100% 100%;
+  }  
+
+  @include devices(mobile) {
+    width: 288px;
+    height: 56px;
+  }
+
+  @include devices(smallMobile) {
+    width: 75vw;
   }
 
   h4 {
@@ -71,12 +103,35 @@
 .optionConnector {
   width: 17px;
   border-bottom: 1px solid var(--grey);
+
+  @include devices(mobile) {
+    width: calc((100vw - 288px) / 2);
+  }
+
+  @include devices(smallMobile) {
+    width: 12.5vw;
+  }
 }
 
 .progressBar {
   display: flex;
   align-items: center;
   width: 24vw;
+  transition: all 0.3s;
+  
+  @include devices(mobile) {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-game);
+    position: absolute;
+    right: 0;
+    transform: translateX(100%);
+    overflow: hidden;
+
+    &.isMobileMenuOpened {
+      transform: translateX(0%);
+    }
+  }
 }
 
 .progressBarInner {
@@ -101,7 +156,6 @@
   background-repeat: no-repeat;
   font-size: 20px;
   line-height: 20px;
-  cursor: pointer;
   transition: all 0.3s;
 
   &.passed {
@@ -124,6 +178,15 @@
     background-size: 100% 100%;
   }
 
+  @include devices(mobile) {
+    width: 240px;
+    height: 32px;
+  }
+
+  @include devices(smallMobile) {
+    width: 60vw;
+  }
+
   span {
     font-size: 20px;
     line-height: 20px;
@@ -143,5 +206,13 @@
 
   @media(max-width: 1300px) {
     width: 12.5%;
+  }
+
+  @include devices(mobile) {
+    width: calc((100vw - 240px) / 2);
+  }
+
+  @include devices(smallMobile) {
+    width: 20vw;
   }
 }

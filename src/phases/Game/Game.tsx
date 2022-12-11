@@ -1,4 +1,7 @@
 import clsx from 'clsx';
+import Hamburger from 'components/Hamburger';
+import { useCallback, useState } from 'react';
+import Media from 'react-media';
 import s from './Game.module.scss';
 
 type TQuestionStatus = 'passed' | 'current' | 'upcoming';
@@ -105,8 +108,20 @@ function ProgressStep({ prize, status }: IStep): JSX.Element {
 }
 
 export default function Game(): JSX.Element {
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+
+  const toggleMobileMenuOpened = useCallback(() => {
+    setIsMobileMenuOpened(!isMobileMenuOpened);
+  }, [isMobileMenuOpened]);
+
   return (
     <div className={s.wrapper}>
+      <Media query={{ maxWidth: 991 }}>
+        <Hamburger
+          state={isMobileMenuOpened ? 'close' : 'hamburger'}
+          onClick={toggleMobileMenuOpened}
+        />
+      </Media>
       <div className={s.board}>
         <h3 className={s.question}>
           How old your elder brother was 10 years before you was born, mate?
@@ -117,7 +132,10 @@ export default function Game(): JSX.Element {
           ))}
         </div>
       </div>
-      <div className={s.progressBar}>
+      <div
+        className={clsx(s.progressBar, {
+          [s.isMobileMenuOpened]: isMobileMenuOpened
+        })}>
         <div className={s.progressBarInner}>
           {STEPS_CONFIG.map(({ prize, status }) => (
             <ProgressStep key={prize} prize={prize} status={status} />
