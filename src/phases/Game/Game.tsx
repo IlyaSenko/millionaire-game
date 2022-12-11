@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import Hamburger from 'components/Hamburger';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Media from 'react-media';
+import { formatPrize } from 'utils/formarPrize';
+import questions from 'questions.json';
 import s from './Game.module.scss';
 
 type TQuestionStatus = 'passed' | 'current' | 'upcoming';
@@ -10,78 +12,14 @@ interface IStep {
   status: TQuestionStatus;
 }
 
-const OPTIONS_CONFIG = [
-  {
-    value: 'A',
-    label: '10 years'
-  },
-  {
-    value: 'B',
-    label: '11 years'
-  },
-  {
-    value: 'C',
-    label: '14 years'
-  },
-  {
-    value: 'D',
-    label: '15 years'
+function getStatusById(iteratedQuestionId: number, currentQuestionId: number): TQuestionStatus {
+  if (iteratedQuestionId < currentQuestionId) {
+    return 'passed';
   }
-];
-
-const STEPS_CONFIG: IStep[] = [
-  {
-    prize: 1000000,
-    status: 'upcoming'
-  },
-  {
-    prize: 500000,
-    status: 'upcoming'
-  },
-  {
-    prize: 250000,
-    status: 'upcoming'
-  },
-  {
-    prize: 125000,
-    status: 'upcoming'
-  },
-  {
-    prize: 64000,
-    status: 'upcoming'
-  },
-  {
-    prize: 32000,
-    status: 'upcoming'
-  },
-  {
-    prize: 16000,
-    status: 'upcoming'
-  },
-  {
-    prize: 8000,
-    status: 'current'
-  },
-  {
-    prize: 4000,
-    status: 'passed'
-  },
-  {
-    prize: 2000,
-    status: 'passed'
-  },
-  {
-    prize: 1000,
-    status: 'passed'
-  },
-  {
-    prize: 500,
-    status: 'passed'
+  if (iteratedQuestionId == currentQuestionId) {
+    return 'current';
   }
-];
-
-function formatPrize(x: number) {
-  return `$${x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+  return 'upcoming';
 }
 
 function Option({
@@ -115,12 +53,38 @@ function ProgressStep({ prize, status }: IStep): JSX.Element {
   );
 }
 
-export default function Game({ onFinish }: { onFinish: () => void }): JSX.Element {
+export default function Game({
+  onCorrectAnswer,
+  onWrongAnswer,
+  currentQuestionId
+}: {
+  currentQuestionId: number;
+  onCorrectAnswer: () => void;
+  onWrongAnswer: () => void;
+}): JSX.Element {
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
 
   const toggleMobileMenuOpened = useCallback(() => {
     setIsMobileMenuOpened(!isMobileMenuOpened);
   }, [isMobileMenuOpened]);
+
+  const currentQuestion = useMemo(() => {
+    return questions.find(({ id }) => id === currentQuestionId);
+  }, [currentQuestionId]);
+
+  const handleSelectAnswer = useCallback(
+    (value: string) => {
+      const correctAnswer = currentQuestion?.answers.find(({ isCorrect }) => isCorrect)?.value;
+      const isEnteredValueCorrect = correctAnswer === value;
+
+      if (isEnteredValueCorrect) {
+        onCorrectAnswer();
+      } else {
+        onWrongAnswer();
+      }
+    },
+    [currentQuestion]
+  );
 
   return (
     <div className={s.wrapper}>
@@ -131,12 +95,15 @@ export default function Game({ onFinish }: { onFinish: () => void }): JSX.Elemen
         />
       </Media>
       <div className={s.board}>
-        <h3 className={s.question}>
-          How old your elder brother was 10 years before you was born, mate?
-        </h3>
+        <h3 className={s.question}>{currentQuestion?.question}</h3>
         <div className={s.options}>
-          {OPTIONS_CONFIG.map(({ value, label }) => (
-            <Option key={value} value={value} label={label} onClick={onFinish} />
+          {currentQuestion?.answers.map(({ value, label }) => (
+            <Option
+              key={value}
+              value={value}
+              label={label}
+              onClick={() => handleSelectAnswer(value)}
+            />
           ))}
         </div>
       </div>
@@ -145,9 +112,11 @@ export default function Game({ onFinish }: { onFinish: () => void }): JSX.Elemen
           [s.isMobileMenuOpened]: isMobileMenuOpened
         })}>
         <div className={s.progressBarInner}>
-          {STEPS_CONFIG.map(({ prize, status }) => (
-            <ProgressStep key={prize} prize={prize} status={status} />
-          ))}
+          {questions
+            .map(({ prize, id }) => (
+              <ProgressStep key={id} prize={prize} status={getStatusById(id, currentQuestionId)} />
+            ))
+            .reverse()}
         </div>
       </div>
     </div>
