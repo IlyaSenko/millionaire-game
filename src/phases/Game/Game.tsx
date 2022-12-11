@@ -84,9 +84,17 @@ function formatPrize(x: number) {
   return `$${x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 }
 
-function Option({ value, label }: { value: string; label: string }): JSX.Element {
+function Option({
+  value,
+  label,
+  onClick
+}: {
+  value: string;
+  label: string;
+  onClick: () => void;
+}): JSX.Element {
   return (
-    <div className={s.optionWrapper}>
+    <div className={s.optionWrapper} onClick={onClick}>
       <div className={s.optionConnector} />
       <div className={s.option}>
         <h4>{value}</h4>
@@ -107,7 +115,7 @@ function ProgressStep({ prize, status }: IStep): JSX.Element {
   );
 }
 
-export default function Game(): JSX.Element {
+export default function Game({ onFinish }: { onFinish: () => void }): JSX.Element {
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
 
   const toggleMobileMenuOpened = useCallback(() => {
@@ -128,7 +136,7 @@ export default function Game(): JSX.Element {
         </h3>
         <div className={s.options}>
           {OPTIONS_CONFIG.map(({ value, label }) => (
-            <Option key={value} value={value} label={label} />
+            <Option key={value} value={value} label={label} onClick={onFinish} />
           ))}
         </div>
       </div>

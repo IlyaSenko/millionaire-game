@@ -1,0 +1,87 @@
+@import 'styles/mixins.scss';
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;   
+  
+  @include devices(mobile) {
+    align-items: flex-start;
+  } 
+}
+.hand {
+  @media(max-width: 1360px) {
+    margin-bottom: 24px;
+  }
+  
+  @include devices(mobile) {
+    width: 288px;
+    object-fit: contain;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  overflow: hidden;
+  transform: translateY(-10%);
+
+  @media(max-width: 1360px) {
+    flex-direction: column;
+    transform: none;
+  }
+  
+  @include devices(mobile) {
+    padding-top: 120px;  
+  } 
+}
+
+.text {
+  margin-left: 23px;  
+  
+  @media(max-width: 1360px) {
+    text-align: center;
+    margin-left: 0;
+  }
+}
+
+.heading {
+  width: 624px;
+  font-weight: 600;
+  font-size: 56px;
+  line-height: 60px;
+  margin: 0 0 64px;
+  color: var(--black);
+  
+  @include devices(mobile) {
+    width: 288px;
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
+
+.button {
+  @include devices(mobile) {
+    position: absolute;
+    bottom: 48px;
+    left: 16px;
+    width: calc(100vw - 32px);
+  }
+}
+
+.headingLabel {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 32px;
+  color: var(--black);
+  opacity: 0.5;
+  margin: 0 0 8px;
+
+  @include devices(mobile) {
+  font-size: 18px;
+  line-height: 18px;
+  }
+}
