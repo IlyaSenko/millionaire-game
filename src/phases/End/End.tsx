@@ -15,7 +15,7 @@ export default function End({
   return (
     <div className={s.wrapper}>
       <div className={s.content}>
-        <img className={s.hand} src="/hand.png" alt="hand" />
+        <img className={s.hand} src="hand.png" alt="hand" />
         <div className={s.text}>
           <p className={s.headingLabel}>Total score:</p>
           <h1 className={s.heading}>{formatPrize(prize)} earned</h1>

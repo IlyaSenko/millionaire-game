@@ -5,7 +5,7 @@ export default function Start({ onSubmit }: { onSubmit: () => void }): JSX.Eleme
   return (
     <div className={s.wrapper}>
       <div className={s.content}>
-        <img className={s.hand} src="/hand.png" alt="hand" />
+        <img className={s.hand} src="hand.png" alt="hand" />
         <div className={s.text}>
           <h1 className={s.heading}>Who wants to be a millionaire?</h1>
           <Button className={s.button} onClick={onSubmit}>
@@ -13,7 +13,7 @@ export default function Start({ onSubmit }: { onSubmit: () => void }): JSX.Eleme
           </Button>
         </div>
       </div>
-      <img className={s.bg} src="/start-bg.png" alt="BG" />
+      <img className={s.bg} src="start-bg.png" alt="BG" />
     </div>
   );
 }
