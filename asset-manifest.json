@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/millionaire-game/static/css/main.27965651.css",
+    "main.js": "/millionaire-game/static/js/main.606583f4.js",
+    "index.html": "/millionaire-game/index.html",
+    "main.27965651.css.map": "/millionaire-game/static/css/main.27965651.css.map",
+    "main.606583f4.js.map": "/millionaire-game/static/js/main.606583f4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.27965651.css",
+    "static/js/main.606583f4.js"
+  ]
+}
