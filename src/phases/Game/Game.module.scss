@@ -1,0 +1,147 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 76vw;
+  background: #F5F5F7;
+  padding: 133px 80px 122px;
+}
+
+.question {
+  font-weight: 600;
+  font-size: 32px;
+  width: 624px;
+  margin: 0;
+  color: var(--black);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 0;
+}
+
+.optionWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  background-image: url('/assets/images/option.png');
+  height: 72px;
+  width: 389px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &:active {
+    filter: brightness(0.6);
+  }
+
+  @media(max-width: 1300px) {
+    width: 26vw;
+    background-size: 100% 100%;
+  }
+
+  h4 {
+    margin: 0 8px 0 32px;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  span {
+    color: var(--black);
+  }
+}
+
+.optionConnector {
+  width: 17px;
+  border-bottom: 1px solid var(--grey);
+}
+
+.progressBar {
+  display: flex;
+  align-items: center;
+  width: 24vw;
+}
+
+.progressBarInner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px 0;
+}
+
+.stepWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.step {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 240px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &.passed {
+    background-image: url('/assets/images/progress-step.png');
+    color: var(--grey);
+  }
+
+  &.upcoming {
+    background-image: url('/assets/images/progress-step.png');
+    color: var(--black);
+  }
+
+  &.current {
+    background-image: url('/assets/images/progress-step-current.png');
+    color: var(--orange);
+  }
+
+  @media(max-width: 1300px) {
+    width: 75%;
+    background-size: 100% 100%;
+  }
+
+  span {
+    font-size: 20px;
+    line-height: 20px;
+  }
+}
+
+.progressStepConnector {
+  width: calc((100% - 240px) / 2);
+
+  &.passed, &.upcoming {
+    border-bottom: 1px solid var(--grey);
+  }
+
+  &.current {
+    border-bottom: 1px solid var(--orange);
+  }
+
+  @media(max-width: 1300px) {
+    width: 12.5%;
+  }
+}
